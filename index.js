@@ -8,57 +8,59 @@ app.use(express.json())
 
 app.use(cors())
 
-mongoose.connect("mongodb+srv://root:VRPd3ICLK6juCQCa@cluster0.dg4ocjz.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-});
+const db = require("./DB/db")
+const model = require("./entities/user")
+const Qrouter = require("./Services/service")
 
-const quizDB = new mongoose.Schema({
-    name: String,
-    sid: Number
-})
+app.use(Qrouter);
 
-const quizD = mongoose.model("quizDB", quizDB);
+// mongoose.connect("mongodb+srv://root:VRPd3ICLK6juCQCa@cluster0.dg4ocjz.mongodb.net/?retryWrites=true&w=majority", {
+//     useNewUrlParser: true,
+// });
 
-app.get("/", (req, res) => {
+// const quizDB = new mongoose.Schema({
+//     name: String,
+//     sid: Number
+// })
 
-    const data = new quizD({
-        name: "rajat kadian",
-        sid: 300351928
-    })
+// const quizD = mongoose.model("quizDB", quizDB);
 
-    data.save()
-        .then((result) => {
-            console.log(result);
-            // res.send("Data inserted successfully");
-            res.json(data)
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error inserting data");
-        });
+// app.get("/", (req, res) => {
 
+//     const data = new quizD({
+//         name: "rajat kadian",
+//         sid: 300351928
+//     })
 
-
-})
-
-app.get("/allData", (req, res) => {
-    quizD.find({})
-        .then((a) => {
-            res.json(a);
-        })
-        .catch((error) => {
-            // Handle any errors that occurred during the query
-            res.status(500).json({ error: "Internal Server Error" });
-        });
-});
+//     data.save()
+//         .then((result) => {
+//             console.log(result);
+//             // res.send("Data inserted successfully");
+//             res.json(data)
+//         })
+//         .catch((error) => {
+//             console.error(error);
+//             res.status(500).send("Error inserting data");
+//         });
 
 
-  
+
+// })
+
+// app.get("/allData", (req, res) => {
+//     quizD.find({})
+//         .then((a) => {
+//             res.json(a);
+//         })
+//         .catch((error) => {
+//             // Handle any errors that occurred during the query
+//             res.status(500).json({ error: "Internal Server Error" });
+//         });
+// });
 
 
 app.listen(7000, (req, res) => {
     console.log('listening')
 })
-
 
 
